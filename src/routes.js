@@ -8,7 +8,7 @@ const routes = new express.Router();
 const uploadConfig = require("./config/upload");
 const multiPart = multer(uploadConfig);
 
-routes.get("/api/list", MyController.listData);
+routes.get("/api/list/:passar_id", MyController.listData);
 routes.post("/api/insert", multiPart.none(), MyController.insertData);
 routes.post("/api/insert-image", multiPart.single('image'), MyController.deleteData);
 routes.put("/api/update", multiPart.none(), MyController.updateData);
