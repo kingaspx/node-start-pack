@@ -4,7 +4,10 @@ const express = require("express");
 const app = express();
 const server = require("http").Server(app);
 const path = require("path");
-const io = require('socket.io')(server)
+const swaggerAutogen = require('swagger-autogen')();
+const io = require('socket.io')(server);
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
 const PORT = process.env.PORT || 21598;
 const HOST = "0.0.0.0";
@@ -17,6 +20,7 @@ app.use((req, res, next) => {
 });
 
 app.use(require("./routes"));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 io.on('connection', sock => {
   console.log('ID: ' + sock.id)
